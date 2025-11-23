@@ -1,0 +1,28 @@
+#include "DayXX.h"
+
+#include "DayFactory.h"
+
+bool DayXX::registered = []() {
+	DayFactory::get().registerDay(XX, []() -> std::unique_ptr<DayInterface> {
+		return std::make_unique<DayXX>();
+		});
+	return true;
+}();
+
+DayXX::DayXX()
+	: DayInterface(XX)
+{}
+
+size_t DayXX::part1()
+{
+	size_t res{ 0 };
+
+	return res;
+}
+
+size_t DayXX::part2()
+{
+	size_t res{ 0 };
+
+	return res;
+}
