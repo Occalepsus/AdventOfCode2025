@@ -11,9 +11,9 @@ class DayInterface
 public:
 	const int dayNumber{ 0 };
 
-	explicit DayInterface(int dayNumber)
+	explicit DayInterface(int dayNumber, bool fromUrl = true)
 		: dayNumber(dayNumber)
-		, inputLines(Utilities::getUrlContent(Utilities::getCookieFromFile("../../aoc_cookie.txt"), std::format("https://adventofcode.com/2024/day/{}/input", dayNumber)))
+		, inputLines(fromUrl ? Utilities::getUrlContent(Utilities::getCookieFromFile("../../aoc_cookie.txt"), std::format("https://adventofcode.com/2025/day/{}/input", dayNumber)) : Utilities::getPromptContent())
 	{};
 
 	virtual ~DayInterface() = default;

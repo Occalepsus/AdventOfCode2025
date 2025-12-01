@@ -5,9 +5,10 @@
 
 namespace Utilities
 {
-	inline size_t concatNumbers(size_t pA, size_t pB)
+	template<typename T>
+	inline T concatNumbers(T pA, T pB)
 	{
-		size_t lB_copy{ pB };
+		T lB_copy{ pB };
 
 		while (lB_copy > 0)
 		{
@@ -18,8 +19,16 @@ namespace Utilities
 		return pA + pB;
 	}
 
+	template<typename T>
+	inline T positiveModulo(T value, T mod)
+	{
+		return ((value % mod) + mod) % mod;
+	}
+
 	std::string getCookieFromFile(const std::string& filepath);
 
 	std::vector<std::string> getUrlContent(const std::string& cookie, const std::string& url);
+
+	std::vector<std::string> getPromptContent();
 };
 

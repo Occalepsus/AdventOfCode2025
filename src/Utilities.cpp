@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <curl/curl.h>
+#include <iostream>
 
 #include <filesystem>
 
@@ -52,7 +53,20 @@ std::vector<std::string> Utilities::getUrlContent(const std::string& cookie, con
 	std::istringstream iss{ readBuffer };
 	std::string line;
 	while (std::getline(iss, line)) {
-		input.push_back(line);
+		input.emplace_back(std::move(line));
+	}
+
+	return input;
+}
+
+std::vector<std::string> Utilities::getPromptContent()
+{
+	std::cout << "Prompt input mode. Enter input lines followed by an empty line to finish:\n";
+
+	std::vector<std::string> input;
+	std::string line;
+	while (std::getline(std::cin, line) && !line.empty()) {
+		input.emplace_back(std::move(line));
 	}
 
 	return input;
