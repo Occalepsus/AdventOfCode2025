@@ -3,6 +3,7 @@
 #include <fstream>
 #include <curl/curl.h>
 #include <iostream>
+#include <algorithm>
 
 #include <filesystem>
 
@@ -65,9 +66,28 @@ std::vector<std::string> Utilities::getPromptContent()
 
 	std::vector<std::string> input;
 	std::string line;
-	while (std::getline(std::cin, line) && !line.empty()) {
+	while (std::getline(std::cin, line) && line != "+") {
 		input.emplace_back(std::move(line));
 	}
 
 	return input;
+}
+
+Utilities::Range::Range(std::string_view rangeStr)
+{
+	size_t dashPos{ rangeStr.find('-') };
+	start = std::stoull(std::string(rangeStr.substr(0, dashPos)));
+	end = std::stoull(std::string(rangeStr.substr(dashPos + 1)));
+}
+
+bool Utilities::Range::tryMerge(const Range& other)
+{
+	if (start <= other.end + 1 && other.start <= end + 1)
+	{
+		start = min(start, other.start);
+		end = max(end, other.end);
+		return true;
+	}
+
+	return false;
 }
