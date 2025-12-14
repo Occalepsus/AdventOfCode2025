@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <cmath>
 
 namespace Utilities
 {
@@ -53,3 +54,46 @@ namespace Utilities
 	};
 };
 
+struct Tile
+{
+	int64_t x{ 0 };
+	int64_t y{ 0 };
+
+	Tile() = default;
+
+	Tile(int64_t x, int64_t y) : x(x), y(y) {}
+
+	explicit Tile(const std::string& str)
+	{
+		const size_t commaPos{ str.find(',') };
+		x = std::stoull(str.substr(0, commaPos));
+		y = std::stoull(str.substr(commaPos + 1));
+	}
+
+	Tile abs() const
+	{
+		return Tile(std::abs(x), std::abs(y));
+	}
+
+	bool operator==(const Tile& other) const = default;
+
+	Tile operator+(const Tile& other) const
+	{
+		return Tile(x + other.x, y + other.y);
+	}
+
+	Tile operator-(const Tile& other) const
+	{
+		return Tile(x - other.x, y - other.y);
+	}
+
+	double distanceTo(const Tile& other) const
+	{
+		return std::sqrt(std::pow(static_cast<double>(x) - static_cast<double>(other.x), 2) + std::pow(static_cast<double>(y) - static_cast<double>(other.y), 2));
+	}
+
+	size_t area() const
+	{
+		return std::abs(x * y);
+	}
+};
