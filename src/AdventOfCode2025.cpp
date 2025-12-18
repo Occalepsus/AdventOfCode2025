@@ -5,7 +5,7 @@
 
 int main()
 {
-	const int dayNumber{ 9 };
+	const int dayNumber{ 8 };
 
     std::unique_ptr<DayInterface> day{ DayFactory::get().createDay(dayNumber) };
 
